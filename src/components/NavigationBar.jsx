@@ -5,7 +5,7 @@ const NavigationBar = () => {
   return (
     <div>
       <h1>Budget App</h1>
-      <button type="button">New Transaction</button>
+      <Link to="/newtransaction">New Transaction</Link>
     </div>
   )
 
