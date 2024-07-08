@@ -8,19 +8,39 @@ const NewTransaction = () => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
   const [from, setFrom] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
   const handleDateChange = (event) => {
-    setDate(event.target.value);
+    const inputDate = event.target.value;
+    setDate(inputDate);
+    validateDate(inputDate);
   }
 
   const handleNameChange = (event) => {
+    // Check if inputName contains any digits
+    if (/\d/.test(event.target.value)) {
+      setShowAlert(true); // Show alert if there are digits
+    } else {
+      setShowAlert(false); // Hide alert if there are no digits
+    }
     setName(event.target.value);
   }
+
+  const validateDate = (inputDate) => {
+    // Simple date format validation (YYYY-MM-DD)
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(inputDate)) {
+      setIsValid(false);
+      setErrorMessage('Please enter a valid date (YYYY-MM-DD)');
+      return;
+    }
+  }
   const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+    this.setAmount(event.target.value);
   }
   const handleFromChange = (event) => {
-    setFrom(event.target.value);
+    this.setFrom(event.target.value);
   }
 
   const handleSubmit = (event) => {
@@ -56,7 +76,14 @@ const NewTransaction = () => {
         From <input type='text' id="txt_From" value={from} onChange={handleFromChange}></input>
 
         <input type="submit" value="CREATE NEW ITEM" />
-
+        { showAlert && (
+        <div className="alert">
+          Please enter a valid name (without numbers).
+        </div>
+      )}
+      {!isValid && (
+        <div style={{ color: 'red' }}>{errorMessage}</div>
+      )}
       </div>
     </form>
   )
