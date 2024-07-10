@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+const API = import.meta.env.VITE_API_URL
 
 function Home() {
 
@@ -8,7 +9,7 @@ function Home() {
 
     useEffect(() => {
         //fetch(`http://localhost:3456/transactions`)
-        fetch('https://budgetting-app-express.onrender.com/transactions')
+        fetch(`${API}/transactions`)
             .then(responseP => responseP.json())
             .then(dataP => {
                 console.log("after github projects success");

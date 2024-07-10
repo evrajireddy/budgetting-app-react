@@ -17,7 +17,7 @@ const Transaction = (props) => {
     const fetchData = async () => {
         try {
             //const response = await fetch('http://localhost:3456/transactions'); 
-            const response = await fetch(`https://budgetting-app-express.onrender.com/transactions/${id}`);
+            const response = await fetch(`${API}/transactions/${id}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -33,7 +33,7 @@ const Transaction = (props) => {
         const transactionId = event.target.getAttribute('data-transactionid');
 
         //fetch(`http://localhost:3456/transactions/${transactionId}`, {
-        fetch(`https://budgetting-app-express.onrender.com/${transactionId}`, {
+        fetch(`${API}/transactions/${transactionId}`, {
             method: 'DELETE',
         }).then((data) => { window.location.href = "/"; })
             .catch((err) => console.log('error in deleted'));

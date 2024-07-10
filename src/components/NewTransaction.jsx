@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+const API = import.meta.env.VITE_API_URL
 
 const NewTransaction = () => {
 
@@ -52,7 +53,7 @@ const NewTransaction = () => {
       from: from,
     }
     //fetch(`http://localhost:3456/transactions`,
-fetch(`https://budgetting-app-express.onrender.com/transactions`,
+    fetch(`${API}/transactions`,
       {
         method: "POST",
         body: JSON.stringify(newTransaction),
@@ -77,14 +78,14 @@ fetch(`https://budgetting-app-express.onrender.com/transactions`,
         From <input type='text' id="txt_From" value={from} onChange={handleFromChange}></input>
 
         <input type="submit" value="CREATE NEW ITEM" />
-        { showAlert && (
-        <div className="alert">
-          Please enter a valid name (without numbers).
-        </div>
-      )}
-      {!isValid && (
-        <div style={{ color: 'red' }}>{errorMessage}</div>
-      )}
+        {showAlert && (
+          <div className="alert">
+            Please enter a valid name (without numbers).
+          </div>
+        )}
+        {!isValid && (
+          <div style={{ color: 'red' }}>{errorMessage}</div>
+        )}
       </div>
     </form>
   )

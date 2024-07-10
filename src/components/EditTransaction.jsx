@@ -6,6 +6,7 @@ const API = import.meta.env.VITE_API_URL
 import { useParams } from "react-router-dom";
 
 
+
 const EditTransaction = () => {
     const [date, setDate] = useState("");
     const [name, setName] = useState("");
@@ -22,7 +23,7 @@ const EditTransaction = () => {
     const fetchData = async () => {
         try {
             //const response = await fetch(`http://localhost:3456/transactions/${id}`);
-            const response = await fetch(`https://budgetting-app-express.onrender.com/transactions/${id}`);
+            const response = await fetch(`${API}/transactions/${id}`);
            
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -62,7 +63,7 @@ const EditTransaction = () => {
             from: from,
         }
        // fetch(`http://localhost:3456/transactions/${transactionId}`,
-       fetch(`https://budgetting-app-express.onrender.com/transactions/${transactionId}`,
+       fetch(`${API}/transactions/${transactionId}`,
             {
                 method: "PUT",
                 body: JSON.stringify(editTransaction),
@@ -70,9 +71,8 @@ const EditTransaction = () => {
                     "Content-Type": "application/json",
                 }
             })
-            .then(responseP => responseP.json())
             .then(dataP => {
-                console.log(dataP);
+                window.location.href = "/"; 
             }).catch(error => console.error('Error: Updating transactions', error));
     }
 
