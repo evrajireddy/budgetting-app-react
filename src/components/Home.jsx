@@ -7,7 +7,8 @@ function Home() {
     const [totalValue, setTotalValue] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:3456/transactions`)
+        //fetch(`http://localhost:3456/transactions`)
+        fetch('https://budgetting-app-express.onrender.com/transactions')
             .then(responseP => responseP.json())
             .then(dataP => {
                 console.log("after github projects success");

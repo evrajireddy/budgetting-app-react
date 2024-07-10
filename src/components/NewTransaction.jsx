@@ -51,7 +51,8 @@ const NewTransaction = () => {
       amount: amount,
       from: from,
     }
-    fetch(`http://localhost:3456/transactions`,
+    //fetch(`http://localhost:3456/transactions`,
+fetch(`https://budgetting-app-express.onrender.com/transactions`,
       {
         method: "POST",
         body: JSON.stringify(newTransaction),

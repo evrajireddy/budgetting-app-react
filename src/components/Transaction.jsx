@@ -17,7 +17,7 @@ const Transaction = (props) => {
     const fetchData = async () => {
         try {
             //const response = await fetch('http://localhost:3456/transactions'); 
-            const response = await fetch(`http://localhost:3456/transactions/${id}`);
+            const response = await fetch(`https://budgetting-app-express.onrender.com/transactions/${id}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -32,9 +32,10 @@ const Transaction = (props) => {
     const handleDelete = (event) => {
         const transactionId = event.target.getAttribute('data-transactionid');
 
-        fetch(`http://localhost:3456/transactions/${transactionId}`, {
+        //fetch(`http://localhost:3456/transactions/${transactionId}`, {
+        fetch(`https://budgetting-app-express.onrender.com/${transactionId}`, {
             method: 'DELETE',
-        }).then((data) => {window.location.href = "/";})
+        }).then((data) => { window.location.href = "/"; })
             .catch((err) => console.log('error in deleted'));
 
 
@@ -46,14 +47,16 @@ const Transaction = (props) => {
 
     return (
         <div className="grid-container">
-            <h2>Grid Component</h2>
+            <h2>Transaction</h2>
             <div className="grid">
                 <div key={data.id} className="grid-item">
-                    <span>{data.item_name}</span>
-                    <p>{data.from}</p>
+                    <div><span>Date:  </span>{data.date}</div>
+                    <div><span>Name:  </span> <span>{data.item_name}</span></div>
+                    <div><span>Amount:  </span>{data.amount}</div>
+                    <div><span>From:  </span> <span>{data.from}</span></div>
 
-                    <button id={"btn_edit_" + data.id} data-transactionid={data.id} type="button" onClick={handleEdit}>Edit</button>
-                    
+                    <Link to={{ pathname: `/edittransaction/${data.id}` }}>Edit Transaction</Link>
+
                     <button id={"btn_del_" + data.id} data-transactionid={data.id} type="button" onClick={handleDelete}>Delete</button>
                 </div>
             </div>

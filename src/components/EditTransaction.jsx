@@ -7,6 +7,11 @@ import { useParams } from "react-router-dom";
 
 
 const EditTransaction = () => {
+    const [date, setDate] = useState("");
+    const [name, setName] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [from, setFrom] = useState("");
+
     const [data, setData] = useState({});
     const { id } = useParams();
 
@@ -16,44 +21,77 @@ const EditTransaction = () => {
 
     const fetchData = async () => {
         try {
-            //const response = await fetch('http://localhost:3456/transactions'); 
-            const response = await fetch(`http://localhost:3456/transactions/${id}`);
+            //const response = await fetch(`http://localhost:3456/transactions/${id}`);
+            const response = await fetch(`https://budgetting-app-express.onrender.com/transactions/${id}`);
+           
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
             console.log("result", jsonData);
+            setName(jsonData.item_name);
+            setDate(jsonData.date);
+            setAmount(jsonData.amount);
+            setFrom(jsonData.from);
             setData(jsonData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+    const handleDateChange = (event) => {
+        const inputDate = event.target.value;
+        setDate(inputDate);
+    }
 
-    const handleDelete = (event) => {
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    }
+    const handleAmountChange = (event) => {
+        setAmount(event.target.value);
+    }
+    const handleFromChange = (event) => {
+        setFrom(event.target.value);
+    }
+
+    const handleSubmit = (event) => {
         const transactionId = event.target.getAttribute('data-transactionid');
-
-        fetch(`http://localhost:3456/transactions/${transactionId}`, {
-            method: 'DELETE',
-        }).then((data) => {window.location.href = "/";})
-            .catch((err) => console.log('error in deleted'));
-
-
-    };
-
-    const handleEdit = (event) => {
-
+        const editTransaction = {
+            date: date,
+            item_name: name,
+            amount: amount,
+            from: from,
+        }
+       // fetch(`http://localhost:3456/transactions/${transactionId}`,
+       fetch(`https://budgetting-app-express.onrender.com/transactions/${transactionId}`,
+            {
+                method: "PUT",
+                body: JSON.stringify(editTransaction),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+            .then(responseP => responseP.json())
+            .then(dataP => {
+                console.log(dataP);
+            }).catch(error => console.error('Error: Updating transactions', error));
     }
 
     return (
         <div className="grid-container">
-            <h2>Grid Component</h2>
+
             <div className="grid">
                 <div key={data.id} className="grid-item">
-                    <span>{data.item_name}</span>
-                    <p>{data.from}</p>
 
-                    <Link to={{ pathname: `/edittransaction/${transaction.id}` }}>Edit Transaction</Link>
-                    <button id={"btn_del_" + data.id} data-transactionid={data.id} type="button" onClick={handleDelete}>Delete</button>
+
+                    <h2>Edit item</h2>
+
+                    Date <input type="text" id="txt_date" value={date} onChange={handleDateChange} ></input>
+                    Name <input type="text" id="txt_Name" value={name} onChange={handleNameChange}></input>
+                    Amout <input type="text" id="txt_Amount" value={amount} onChange={handleAmountChange}></input>
+                    From <input type='text' id="txt_From" value={from} onChange={handleFromChange}></input>
+                    <br />
+                    <button id="btnSubmit" data-transactionid={data.id} type="button" onClick={handleSubmit}>Submit</button>
+
                 </div>
             </div>
         </div>
