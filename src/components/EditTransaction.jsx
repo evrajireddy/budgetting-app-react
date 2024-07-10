@@ -6,7 +6,7 @@ const API = import.meta.env.VITE_API_URL
 import { useParams } from "react-router-dom";
 
 
-const Transaction = (props) => {
+const EditTransaction = () => {
     const [data, setData] = useState({});
     const { id } = useParams();
 
@@ -52,8 +52,7 @@ const Transaction = (props) => {
                     <span>{data.item_name}</span>
                     <p>{data.from}</p>
 
-                    <button id={"btn_edit_" + data.id} data-transactionid={data.id} type="button" onClick={handleEdit}>Edit</button>
-                    
+                    <Link to={{ pathname: `/edittransaction/${transaction.id}` }}>Edit Transaction</Link>
                     <button id={"btn_del_" + data.id} data-transactionid={data.id} type="button" onClick={handleDelete}>Delete</button>
                 </div>
             </div>
@@ -61,4 +60,4 @@ const Transaction = (props) => {
     );
 };
 
-export default Transaction;
+export default EditTransaction;
