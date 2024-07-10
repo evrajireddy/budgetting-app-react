@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 function Home() {
 
@@ -18,11 +19,14 @@ function Home() {
             }).catch(error => console.error('Error: fetching github project details failed:', error));
     }, []);
     const getTdData = transactions.map((transaction) =>
-        <tr key={transaction.id}><td>{transaction.date}</td>
+        <tr key={transaction.id}>
+            <td>{transaction.date}</td>
+            <td><Link to={{ pathname: `/transactions/${transaction.id}` }}>New Transaction</Link></td>
             <td>{transaction.item_name}</td>
             <td>{transaction.from}</td>
             <td>{transaction.amount}</td>
         </tr>
+
     );
 
     return (
@@ -34,3 +38,22 @@ function Home() {
 }
 
 export default Home;
+
+
+/*
+
+ const getTdData = transactions.map((transaction) => {
+        let transactionURL = `/transaction/${transaction.id}`;
+        return
+        <tr key={transaction.id}>
+            <td>{transaction.date}</td>
+            <td><Link to={transactionURL}>New Transaction</Link></td>
+            <td>{transaction.item_name}</td>
+            <td>{transaction.from}</td>
+            <td>{transaction.amount}</td>
+        </tr>
+    }
+    );
+
+
+*/
