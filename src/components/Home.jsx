@@ -16,15 +16,14 @@ function Home() {
                 console.log(dataP);
                 setTransactions(dataP);
                 console.log(dataP);
-                let totalValue = dataP.reduce((accumulator, transaction) => { return accumulator + transaction.amount }, 0);
+                let totalValue = dataP.reduce((accumulator, transaction) => { return accumulator + Number(transaction.amount) }, 0);
                 setTotalValue(totalValue);
             }).catch(error => console.error('Error: fetching github project details failed:', error));
     }, []);
     const getTdData = transactions.map((transaction) =>
         <tr key={transaction.id}>
             <td>{transaction.date}</td>
-            <td><Link to={{ pathname: `/transactions/${transaction.id}` }}>New Transaction</Link></td>
-            <td>{transaction.item_name}</td>
+            <td><Link to={{ pathname: `/transactions/${transaction.id}` }}>{transaction.item_name}</Link></td>
             <td>{transaction.from}</td>
             <td>{transaction.amount}</td>
         </tr>
@@ -32,9 +31,17 @@ function Home() {
     );
 
     return (
-        <div >
-            Bank Account Total: {totalValue}
-            <table>{getTdData}</table>
+        <div className="container">
+            <br />
+            <div className='h3'>
+                Bank Account Total: {totalValue}
+            </div>
+            <br />
+            <table className='table table-striped'>
+                <tbody>
+                    {getTdData}
+                </tbody>
+            </table>
         </div>
     )
 }

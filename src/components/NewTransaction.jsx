@@ -36,12 +36,16 @@ const NewTransaction = () => {
       setErrorMessage('Please enter a valid date (YYYY-MM-DD)');
       return;
     }
+    else {
+      setIsValid(true);
+      setErrorMessage('');
+    }
   }
   const handleAmountChange = (event) => {
-    this.setAmount(event.target.value);
+    setAmount(event.target.value);
   }
   const handleFromChange = (event) => {
-    this.setFrom(event.target.value);
+    setFrom(event.target.value);
   }
 
   const handleSubmit = (event) => {
@@ -64,20 +68,35 @@ const NewTransaction = () => {
       .then(responseP => responseP.json())
       .then(dataP => {
         console.log(dataP);
+        window.location.href = "/";
       }).catch(error => console.error('Error: fetching transactions', error));
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <h2>Add a new item</h2>
+    <div className='container'>
+      <form className='form-horizontal' onSubmit={handleSubmit}>
 
-        Date <input type="text" id="txt_date" value={date} onChange={handleDateChange} ></input>
-        Name <input type="text" id="txt_Name" value={name} onChange={handleNameChange}></input>
-        Amout <input type="text" id="txt_Amount" value={amount} onChange={handleAmountChange}></input>
-        From <input type='text' id="txt_From" value={from} onChange={handleFromChange}></input>
+        <h1>Add a new item</h1>
 
-        <input type="submit" value="CREATE NEW ITEM" />
+        <div className="form-group">
+          <label className="control-label">Date </label>
+          <input type="text" className="form-control" id="txt_date" value={date} onChange={handleDateChange} ></input>
+        </div>
+
+        <div className="form-group">
+          <label className="control-label">Name</label>
+          <input type="text" className="form-control" id="txt_Name" value={name} onChange={handleNameChange}></input>
+        </div>
+        <div className="form-group">
+          <label className="control-label">Amout</label>
+          <input type="text" className="form-control" id="txt_Amount" value={amount} onChange={handleAmountChange}></input>
+        </div>
+        <div className="form-group">
+          <label className="control-label">From</label>
+          <input type='text' className="form-control" id="txt_From" value={from} onChange={handleFromChange}></input>
+        </div>
+
+        <input type="submit" className='btn btn-secondary' value="CREATE NEW ITEM" />
         {showAlert && (
           <div className="alert">
             Please enter a valid name (without numbers).
@@ -86,8 +105,9 @@ const NewTransaction = () => {
         {!isValid && (
           <div style={{ color: 'red' }}>{errorMessage}</div>
         )}
-      </div>
-    </form>
+
+      </form>
+    </div>
   )
 
 }

@@ -24,7 +24,7 @@ const EditTransaction = () => {
         try {
             //const response = await fetch(`http://localhost:3456/transactions/${id}`);
             const response = await fetch(`${API}/transactions/${id}`);
-           
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -62,8 +62,8 @@ const EditTransaction = () => {
             amount: amount,
             from: from,
         }
-       // fetch(`http://localhost:3456/transactions/${transactionId}`,
-       fetch(`${API}/transactions/${transactionId}`,
+        // fetch(`http://localhost:3456/transactions/${transactionId}`,
+        fetch(`${API}/transactions/${transactionId}`,
             {
                 method: "PUT",
                 body: JSON.stringify(editTransaction),
@@ -72,25 +72,38 @@ const EditTransaction = () => {
                 }
             })
             .then(dataP => {
-                window.location.href = "/"; 
+                window.location.href = "/";
             }).catch(error => console.error('Error: Updating transactions', error));
     }
 
     return (
-        <div className="grid-container">
+        <div className='container'>
 
-            <div className="grid">
+            <div className="form-horizontal">
                 <div key={data.id} className="grid-item">
 
 
-                    <h2>Edit item</h2>
+                    <h1>Edit item</h1>
 
-                    Date <input type="text" id="txt_date" value={date} onChange={handleDateChange} ></input>
-                    Name <input type="text" id="txt_Name" value={name} onChange={handleNameChange}></input>
-                    Amout <input type="text" id="txt_Amount" value={amount} onChange={handleAmountChange}></input>
-                    From <input type='text' id="txt_From" value={from} onChange={handleFromChange}></input>
+                    <div className="form-group">
+                        <label className="control-label">Date</label>
+                        <input type="text" className="form-control" id="txt_date" value={date} onChange={handleDateChange} ></input>
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label">
+                            Name </label>Ï
+                        <input type="text" className="form-control" id="txt_Name" value={name} onChange={handleNameChange}></input>
+                    </div>
+                    <div className="form-group">
+                    <label className="control-label">Amout </label>
+                        <input type="text" className="form-control" id="txt_Amount" value={amount} onChange={handleAmountChange}></input>
+                    </div>
+                    <div className="form-group">
+                    <label className="control-label">From</label>
+                         <input type='text' className="form-control" id="txt_From" value={from} onChange={handleFromChange}></input>
+                    </div>
                     <br />
-                    <button id="btnSubmit" data-transactionid={data.id} type="button" onClick={handleSubmit}>Submit</button>
+                    <button id="btnSubmit" className='btn btn-secondary' data-transactionid={data.id} type="button" onClick={handleSubmit}>Submit</button>
 
                 </div>
             </div>

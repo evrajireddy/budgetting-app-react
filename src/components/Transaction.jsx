@@ -46,19 +46,24 @@ const Transaction = (props) => {
     }
 
     return (
-        <div className="grid-container">
-            <h2>Transaction</h2>
-            <div className="grid">
-                <div key={data.id} className="grid-item">
-                    <div><span>Date:  </span>{data.date}</div>
-                    <div><span>Name:  </span> <span>{data.item_name}</span></div>
-                    <div><span>Amount:  </span>{data.amount}</div>
-                    <div><span>From:  </span> <span>{data.from}</span></div>
+        <div className='container'>
+            <br />
+            <h1>Transaction</h1>
+            <div className='fs-5' >
 
-                    <Link to={{ pathname: `/edittransaction/${data.id}` }}>Edit Transaction</Link>
+                <table className='table'>
+                    <tr><td>Date:  {data.date}</td> </tr>
+                    <tr><td>Name:  {data.item_name}</td></tr>
+                    <tr><td>Amount: {data.amount}</td></tr>
+                    <tr><td>From: {data.from}</td></tr>
 
-                    <button id={"btn_del_" + data.id} data-transactionid={data.id} type="button" onClick={handleDelete}>Delete</button>
-                </div>
+
+                </table>
+                <Link className='btn btn-secondary' to={{ pathname: `/edittransaction/${data.id}` }}>Edit Transaction</Link>
+<br />
+<br />
+                <button className='btn btn-secondary' id={"btn_del_" + data.id} data-transactionid={data.id} type="button" onClick={handleDelete}>Delete Transaction</button>
+
             </div>
         </div>
     );
